@@ -96,7 +96,23 @@ for img in inames:
 end_time = time.time() - start
 
 
+for i in range(3):
+    try:
+        myfile = open('./QuizList.xlsx', 'r+')
+    except IOError:
+        print('*****************************************')
+        print('Excel file is opened! Please close Excel.')
+        print('({} times left)'.format(3 - i))
+        print('*****************************************')
+        key = input('Close Excel and press any key.')
+    else:
+        break
+else:
+    print('Processing Error!')
+    quit(1)
+
 quiz_list.save('./QuizList.xlsx')
+
 
 print('''
 **********************
