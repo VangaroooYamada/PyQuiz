@@ -1,12 +1,13 @@
-from PIL import Image
 import sys
 import glob
 import re
 import time
 
+import yaml
+import openpyxl as px
 import pyocr
 import pyocr.builders
-import openpyxl as px
+from PIL import Image
 
 
 tools = pyocr.get_available_tools()
@@ -25,33 +26,9 @@ print("Will use lang '%s'" % (lang))
 
 
 inames = glob.iglob('./imgs/*.png')
-trans_dict = {
-    u'①': '1',
-    u'②': '2',
-    u'③': '3',
-    u'④': '4',
-    u'⑤': '5',
-    u'⑥': '6',
-    u'⑦': '7',
-    u'⑧': '8',
-    u'⑨': '9',
-    u'⑩': '10',
-    u'⑪': '11',
-    u'⑫': '12',
-    u'⑬': '13',
-    u'⑭': '14',
-    u'⑮': '15',
-    u'⑯': '16',
-    u'⑰': '17',
-    u'⑱': '18',
-    u'⑲': '19',
-    u'⑳': '20',
-    '!': '！',
-    '?': '？',
-    '`': '「',
-    ' ': '',
-    '\n': '',
-}
+
+with open('./trans_dict.yaml', encoding='utf-8') as yf:
+    trans_dict = yaml.safe_load(yf)
 QLPath = './QuizList.xlsx'
 quiz_list = px.load_workbook(QLPath)
 ws = quiz_list.worksheets[-1]
@@ -77,7 +54,7 @@ for img in inames:
         builder=pyocr.builders.TextBuilder(tesseract_layout=3)
     )
 
-    txt = txt.translate(str.maketrans(trans_dict))
+    txt = txt.translate(str.maketrans(trans_dict)).replace('\n', '')
     for q in re.finditer(r'(問題正解率:\d+\%|Q\.)(.*?でしょう？)', txt):
         # print(q.groups()[1])
         if BR > MR:
