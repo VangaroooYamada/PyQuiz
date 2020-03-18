@@ -80,7 +80,11 @@ def image_processor(img_gen):   # method to write processed text to Excel
             continue
         break
 
-    for img in tqdm(inames):
+    pbar = tqdm(inames)
+
+    for img in pbar:
+        pbar.set_description('PROGRESS')
+
         txt = tool.image_to_string(
             Image.open(img),
             lang='jpn',
