@@ -87,7 +87,7 @@ def image_processor(img_gen):   # method to write processed text to Excel
         )
 
         txt = txt.translate(str.maketrans(trans_dict)).replace('\n', '')
-        for q in re.finditer(r'(問題正解率:\d+\%|Q\.)(.*?でしょう？)', txt):
+        for q in re.finditer(r'(正解率:\d+\%|Q\.)(.*?でしょう？)', txt):
             # print(q.groups()[1])
             if BR > MR:
                 tmp_num = int(ws.title[:-1]) + 1000
