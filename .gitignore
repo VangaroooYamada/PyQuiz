@@ -1,2 +1,4 @@
 *.png
 QuizList.xlsx
+.vscode/settings.json
+~$QuizList.xlsx

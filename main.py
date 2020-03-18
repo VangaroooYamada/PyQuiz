@@ -8,6 +8,7 @@ import openpyxl as px
 import pyocr
 import pyocr.builders
 from PIL import Image
+from tqdm import tqdm
 
 
 # OCR Setting ***************
@@ -25,7 +26,7 @@ print("Will use lang '%s'\n" % (lang))
 
 
 # Data for Excel (Quiz List) ***************
-inames = glob.iglob('./imgs/*.png')     # Image Path Generator
+inames = list(glob.iglob('./imgs/*.png'))     # Image Path List
 QLPath = './QuizList.xlsx'
 quiz_list = px.load_workbook(QLPath)
 with open('./trans_dict.yaml', encoding='utf-8') as yf:
@@ -79,7 +80,7 @@ def image_processor(img_gen):   # method to write processed text to Excel
             continue
         break
 
-    for img in inames:
+    for img in tqdm(inames):
         txt = tool.image_to_string(
             Image.open(img),
             lang='jpn',
