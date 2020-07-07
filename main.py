@@ -26,7 +26,7 @@ print("Will use lang '%s'\n" % (lang))
 
 
 # Data for Excel (Quiz List) ***************
-inames = list(glob.iglob('./imgs/*.png'))     # Image Path List
+inames = list(glob.iglob('./imgs/*.png')) + list(glob.iglob('./imgs/*.jpg'))     # Image Path List
 QLPath = './QuizList.xlsx'
 quiz_list = px.load_workbook(QLPath)
 with open('./trans_dict.yaml', encoding='utf-8') as yf:
