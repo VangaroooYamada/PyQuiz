@@ -101,9 +101,10 @@ def image_processor(img_gen):   # method to write processed text to Excel
                 ws.title = str(tmp_num) + '-'
                 BR = 2
 
-            ws['B' + str(BR)].value = q.groups()[1]
-            q_count += 1
-            BR += 1
+            for question in q.split('Q.'):
+                ws['B' + str(BR)].value = q.groups()[1]
+                q_count += 1
+                BR += 1
 
         i_count += 1
 
